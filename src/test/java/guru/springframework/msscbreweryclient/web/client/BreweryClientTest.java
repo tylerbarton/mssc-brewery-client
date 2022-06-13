@@ -55,4 +55,13 @@ class BreweryClientTest {
         client.updateBeer(uuid, beerDto);
         // updateBeer is void - no return value to test
     }
+
+    /**
+     * Tests DELETE method call to service
+     * "I/O error on DELETE request" is brewery service is not active
+     */
+    @Test
+    void testDeleteBeer(){
+        client.deleteBeer(UUID.randomUUID());
+    }
 }

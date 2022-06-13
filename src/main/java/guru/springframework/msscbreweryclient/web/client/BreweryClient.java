@@ -33,7 +33,7 @@ public class BreweryClient {
      * @param uuid The uuid of the beer itself
      */
     public BeerDto getBeerById(UUID uuid){
-        return restTemplate.getForObject(apihost + BEER_PATH_V1 + uuid, BeerDto.class);
+        return restTemplate.getForObject(apihost + BEER_PATH_V1 + uuid.toString(), BeerDto.class);
     }
 
     /**
@@ -51,7 +51,15 @@ public class BreweryClient {
      * @param beerDto Data
      */
     public void updateBeer(UUID uuid, BeerDto beerDto){
-        restTemplate.put(apihost + BEER_PATH_V1 + uuid, beerDto);
+        restTemplate.put(apihost + BEER_PATH_V1 + uuid.toString(), beerDto);
+    }
+
+    /**
+     * DELETE method sent to web service
+     * @param uuid Id of beer to delete
+     */
+    public void deleteBeer(UUID uuid){
+        restTemplate.delete(apihost + BEER_PATH_V1 + uuid.toString());
     }
 
     public void setApihost(String apihost) {
