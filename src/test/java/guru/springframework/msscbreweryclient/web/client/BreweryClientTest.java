@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests BreweryClient methods
+ * mssc-brewery service must be active for tests to pass
  */
 @SpringBootTest
 class BreweryClientTest {
@@ -40,5 +41,18 @@ class BreweryClientTest {
 
         assertNotNull(uri);
         System.out.println(uri);
+    }
+
+    /**
+     * Handles the PUT request to the web service
+     * "I/O error on PUT request" is brewery service is not active
+     */
+    @Test
+    void testUpdateBeer(){
+        BeerDto beerDto = BeerDto.builder().beerName("TestBeer").build();
+        // There are methods to get a uuid in a real environment
+        UUID uuid = UUID.randomUUID();
+        client.updateBeer(uuid, beerDto);
+        // updateBeer is void - no return value to test
     }
 }
