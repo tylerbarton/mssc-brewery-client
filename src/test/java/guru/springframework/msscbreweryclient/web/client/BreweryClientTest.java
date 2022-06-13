@@ -1,6 +1,7 @@
 package guru.springframework.msscbreweryclient.web.client;
 
 import guru.springframework.msscbreweryclient.web.model.BeerDto;
+import guru.springframework.msscbreweryclient.web.model.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +27,7 @@ class BreweryClientTest {
      * "404: not found" caused by incorrect api path
      */
     @Test
-    void getBeerById() {
+    void testGetBeerById() {
         BeerDto dto = client.getBeerById(UUID.randomUUID());
         assertNotNull(dto);
     }
@@ -64,4 +65,46 @@ class BreweryClientTest {
     void testDeleteBeer(){
         client.deleteBeer(UUID.randomUUID());
     }
+
+    /**
+     * Tests GETS customer method call to service
+     */
+    @Test
+    void testGetCustomerById(){
+        UUID uuid = UUID.randomUUID();
+        CustomerDto customerDto = client.getCustomerById(uuid);
+        assertNotNull(customerDto);
+    }
+
+    /**
+     * Tests POST method call to service
+     */
+    @Test
+    void testSaveNewCustomer(){
+        CustomerDto customerDto = CustomerDto.builder().name("testPOSTcustomer").build();
+        URI uri = client.saveNewCustomer(customerDto);
+
+        assertNotNull(uri);
+        System.out.println(uri);
+    }
+
+    /**
+     * Tests PUT method call to service
+     */
+    @Test
+    void testUpdateCustomer(){
+        CustomerDto customerDto = CustomerDto.builder().name("testcustomer").build();
+        UUID uuid = UUID.randomUUID();
+        client.updateCustomer(uuid, customerDto);
+        // Test passes if not error
+    }
+
+    /**
+     * Tests DELETE method for customer
+     */
+    @Test
+    void testDeleteCustomer(){
+        client.deleteCustomer(UUID.randomUUID());
+    }
+
 }

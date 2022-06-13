@@ -1,6 +1,7 @@
 package guru.springframework.msscbreweryclient.web.client;
 
 import guru.springframework.msscbreweryclient.web.model.BeerDto;
+import guru.springframework.msscbreweryclient.web.model.CustomerDto;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
@@ -64,5 +65,40 @@ public class BreweryClient {
 
     public void setApihost(String apihost) {
         this.apihost = apihost;
+    }
+
+    /**
+     * GET: Gets the customer information from the web service
+     * @param uuid Id of the customer
+     * @return customer information
+     */
+    public CustomerDto getCustomerById(UUID uuid){
+        return restTemplate.getForObject(apihost + BEER_PATH_V1 + uuid.toString(), CustomerDto.class);
+    }
+
+    /**
+     * POST: Saves a new customer to the web service
+     * @param customerDto customer data to save
+     * @return URI of the saved data
+     */
+    public URI saveNewCustomer(CustomerDto customerDto){
+        return restTemplate.postForLocation(apihost+BEER_PATH_V1, customerDto);
+    }
+
+    /**
+     * PUT: Update a customer
+     * @param uuid Id of the customer to update
+     * @param customerDto Data of the customer
+     */
+    public void updateCustomer(UUID uuid, CustomerDto customerDto){
+        restTemplate.put(apihost + BEER_PATH_V1 + uuid.toString(), customerDto);
+    }
+
+    /**
+     * DELETE: delete a customer from the web service
+     * @param uuid Id of the customer to delete
+     */
+    public void deleteCustomer(UUID uuid){
+        restTemplate.delete(apihost + BEER_PATH_V1 + uuid.toString());
     }
 }
